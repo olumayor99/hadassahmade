@@ -1,19 +1,26 @@
 {
   "name": "hadassahmade",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olumayor99/hadassahmade.git"
   },
-  "author": "",
+  "author": "Olumayowa Olatunbosun Taiwo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/olumayor99/hadassahmade/issues"
   },
-  "homepage": "https://github.com/olumayor99/hadassahmade#readme"
+  "homepage": "https://github.com/olumayor99/hadassahmade#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
 }
