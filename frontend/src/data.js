@@ -6,6 +6,7 @@ const data = {
             category: 'Shirts',
             image: 'https://amazona.webacademy.pro/images/p1.jpg',
             price: 120,
+            countInStock: 23,
             brand: 'Nike',
             rating: 4.5,
             numReviews: 10,
@@ -18,6 +19,7 @@ const data = {
             category: 'Shirts',
             image: 'https://amazona.webacademy.pro/images/p2.jpg',
             price: 100,
+            countInStock: 14,
             brand: 'Adidas',
             rating: 4.0,
             numReviews: 6,
@@ -30,6 +32,7 @@ const data = {
             category: 'Shirts',
             image: 'https://amazona.webacademy.pro/images/p3.jpg',
             price: 150,
+            countInStock: 6,
             brand: 'Lacoste',
             rating: 4.6,
             numReviews: 14,
@@ -42,6 +45,7 @@ const data = {
             category: 'Pants',
             image: 'https://amazona.webacademy.pro/images/p4.jpg',
             price: 162,
+            countInStock: 87,
             brand: 'Nike',
             rating: 4.6,
             numReviews: 16,
@@ -54,6 +58,7 @@ const data = {
             category: 'Pant',
             image: 'https://amazona.webacademy.pro/images/p5.jpg',
             price: 65,
+            countInStock: 3,
             brand: 'Puma',
             rating: 4.0,
             numReviews: 6,
@@ -66,6 +71,7 @@ const data = {
             category: 'Pant',
             image: 'https://amazona.webacademy.pro/images/p6.jpg',
             price: 86,
+            countInStock: 0,
             brand: 'Adidas',
             rating: 4.7,
             numReviews: 25,
@@ -74,4 +80,4 @@ const data = {
     ]
 }
 
-export default data
+export default data;
