@@ -1,0 +1,19 @@
+{
+  "name": "hadassahmade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olumayor99/hadassahmade.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olumayor99/hadassahmade/issues"
+  },
+  "homepage": "https://github.com/olumayor99/hadassahmade#readme"
+}
