@@ -6,29 +6,26 @@ import ProductScreen from './screens/ProductScreen';
 function App() {
   return (
     <BrowserRouter>
-      <div className="grid-container">
+      <div className='grid-container'>
+        <header className='row'>
+          <div>
+            <a className='brand' href='/'>
+              HMD
+            </a>
+          </div>
 
-        <header className="row">
-
-            <div>
-                <a className="brand" href="/">HMD</a>
-            </div>
-
-            <div>
-                <a href="/cart">Cart</a>
-                <a href="/signin">Sign In</a>
-            </div>
-
+          <div>
+            <a href='/cart'>Cart</a>
+            <a href='/signin'>Sign In</a>
+          </div>
         </header>
 
         <main>
-
-          <Route path="/product/:id" component={ProductScreen}></Route>
-          <Route path="/" component={HomeScreen} exact></Route>
-
+          <Route path='/product/:id' component={ProductScreen}></Route>
+          <Route path='/' component={HomeScreen} exact></Route>
         </main>
 
-        <footer className="row center">©2021. All Rights Reserved.</footer>
+        <footer className='row center'>©2021. All Rights Reserved.</footer>
       </div>
     </BrowserRouter>
   );
