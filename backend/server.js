@@ -5,11 +5,14 @@ import userRouter from './routers/userRouter.js';
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/hadassahmade', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URL || 'mongodb://localhost/hadassahmade',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  }
+);
 
 app.get('/api/products/:id', (req, res) => {
   const product = data.products.find((x) => x._id === req.params.id);
