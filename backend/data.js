@@ -19,7 +19,7 @@ const data = {
     {
       name: 'Nike Slim Shirt',
       category: 'Shirts',
-      image: 'https://amazona.webacademy.pro/images/p1.jpg',
+      image: 'https://houdini.tinkerbot.dev/images/p1.jpg',
       price: 120,
       countInStock: 23,
       brand: 'Nike',
@@ -31,7 +31,7 @@ const data = {
     {
       name: 'Adidas Fit Shirt',
       category: 'Shirts',
-      image: 'https://amazona.webacademy.pro/images/p2.jpg',
+      image: 'https://houdini.tinkerbot.dev/images/p2.jpg',
       price: 100,
       countInStock: 14,
       brand: 'Adidas',
@@ -43,7 +43,7 @@ const data = {
     {
       name: 'Lacoste Free Shirt',
       category: 'Shirts',
-      image: 'https://amazona.webacademy.pro/images/p3.jpg',
+      image: 'https://houdini.tinkerbot.dev/images/p3.jpg',
       price: 150,
       countInStock: 6,
       brand: 'Lacoste',
@@ -55,7 +55,7 @@ const data = {
     {
       name: 'Nike Slim Pant',
       category: 'Pants',
-      image: 'https://amazona.webacademy.pro/images/p4.jpg',
+      image: 'https://houdini.tinkerbot.dev/images/p4.jpg',
       price: 162,
       countInStock: 87,
       brand: 'Nike',
@@ -67,7 +67,7 @@ const data = {
     {
       name: 'Puma Slim Pant',
       category: 'Pant',
-      image: 'https://amazona.webacademy.pro/images/p5.jpg',
+      image: 'https://houdini.tinkerbot.dev/images/p5.jpg',
       price: 65,
       countInStock: 3,
       brand: 'Puma',
@@ -79,7 +79,7 @@ const data = {
     {
       name: 'Adidas Fit Pant',
       category: 'Pant',
-      image: 'https://amazona.webacademy.pro/images/p6.jpg',
+      image: 'https://houdini.tinkerbot.dev/images/p6.jpg',
       price: 86,
       countInStock: 0,
       brand: 'Adidas',
