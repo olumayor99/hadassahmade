@@ -6,6 +6,9 @@ import CheckoutSteps from '../components/CheckoutSteps';
 export default function PaymentMethodScreen(props) {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+  if (cart.cartItems.length === 0) {
+    props.history.push('/');
+  }
   if (!shippingAddress.address) {
     props.history.push('/shipping');
   }

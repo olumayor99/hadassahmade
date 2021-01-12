@@ -8,6 +8,9 @@ export default function ShippingAddressScreen(props) {
   const { userInfo } = userSignin;
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+  if (cart.cartItems.length === 0) {
+    props.history.push('/');
+  }
   if (!userInfo) {
     props.history.push('/signin');
   }
