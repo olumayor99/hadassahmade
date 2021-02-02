@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -38,6 +38,7 @@ export default function Navbar() {
     dispatch(signout());
   };
   const classes = useStyles();
+
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const isMenuOpen = Boolean(menuAnchorEl);
   const openMenu = (event) => {
@@ -71,7 +72,7 @@ export default function Navbar() {
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open);
-  React.useEffect(() => {
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
@@ -150,6 +151,44 @@ export default function Navbar() {
                             to='/orderhistory'>
                             Order History
                           </MenuItem>
+
+                          {userInfo && userInfo.isAdmin && (
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/dashboard'>
+                              Dashboard
+                            </MenuItem>
+                          )}
+                          {userInfo && userInfo.isAdmin && (
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/productlist'>
+                              Products
+                            </MenuItem>
+                          )}
+                          {userInfo && userInfo.isAdmin && (
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/orderlist'>
+                              Orders
+                            </MenuItem>
+                          )}
+                          {userInfo && userInfo.isAdmin && (
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/userlist'>
+                              Users
+                            </MenuItem>
+                          )}
+
                           <MenuItem onClick={(handleClose, signoutHandler)}>
                             Logout
                           </MenuItem>
@@ -171,16 +210,6 @@ export default function Navbar() {
               ) : (
                 <Button color='inherit' component={Link} to='/signin'>
                   Sign In
-                </Button>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <Button
-                  ref={anchorRef}
-                  color='inherit'
-                  aria-controls={open ? 'admin-menu' : undefined}
-                  aria-haspopup='true'
-                  onClick={handleToggle}>
-                  Admin<i className='fa fa-caret-down'></i>
                 </Button>
               )}
             </div>
