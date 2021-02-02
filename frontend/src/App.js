@@ -1,8 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Container,
+  Box,
+  Typography,
+  AppBar,
+  Toolbar,
+  Button,
+} from '@material-ui/core';
 import { signout } from './actions/userActions';
 import PrivateRoute from './components/PrivateRoute';
+import Navbar from './components/layouts/Navbar';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
@@ -15,97 +25,44 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SignInScreen from './screens/SignInScreen';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: theme.palette.grey[300],
+  },
+}));
+
 function App() {
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-  const dispatch = useDispatch();
-  const signoutHandler = () => {
-    dispatch(signout());
-  };
+  const classes = useStyles();
 
   return (
     <BrowserRouter>
-      <div className='grid-container'>
-        <header className='row'>
-          <div>
-            <Link className='brand' to='/'>
-              HMD
-            </Link>
-          </div>
-
-          <div>
-            <Link to='/cart'>
-              Cart
-              {cartItems.length > 0 && (
-                <span className='badge'>{cartItems.length}</span>
-              )}
-            </Link>
-            {userInfo ? (
-              <div className='dropdown'>
-                <Link to='#'>
-                  {userInfo.name} <i className='fa fa-caret-down'></i>
-                </Link>
-                <ul className='dropdown-content'>
-                  <li>
-                    <Link to='/profile'>User Profile</Link>
-                  </li>
-                  <li>
-                    <Link to='/orderhistory'>Order History</Link>
-                  </li>
-                  <li>
-                    <Link to='#signout' onClick={signoutHandler}>
-                      Sign Out
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <Link to='/signin'>Sign In</Link>
-            )}
-            {userInfo && userInfo.isAdmin && (
-              <div className='dropdown'>
-                <Link to='#admin'>
-                  Admin <i className='fa fa-caret-down'></i>
-                </Link>
-                <ul className='dropdown-content'>
-                  <li>
-                    <Link to='/dashboard'>Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to='/productlist'>Products</Link>
-                  </li>
-                  <li>
-                    <Link to='/orderlist'>Orders</Link>
-                  </li>
-                  <li>
-                    <Link to='/userlist'>Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </header>
-
-        <main>
-          <Route path='/cart/:id?' component={CartScreen}></Route>
-          <Route path='/product/:id' component={ProductScreen}></Route>
-          <Route path='/signin' component={SignInScreen}></Route>
-          <Route path='/register' component={RegisterScreen}></Route>
-          <Route path='/shipping' component={ShippingAddressScreen}></Route>
-          <Route path='/payment' component={PaymentMethodScreen}></Route>
-          <Route path='/placeorder' component={PlaceOrderScreen}></Route>
-          <Route path='/order/:id' component={OrderScreen}></Route>
-          <Route path='/orderhistory' component={OrderHistoryScreen}></Route>
+      <Container className={classes.root} disableGutters>
+        <Navbar />
+        <Switch>
+          <Route exact path='/cart/:id?' component={CartScreen}></Route>
+          <Route exact path='/product/:id' component={ProductScreen}></Route>
+          <Route exact path='/signin' component={SignInScreen}></Route>
+          <Route exact path='/register' component={RegisterScreen}></Route>
+          <Route
+            exact
+            path='/shipping'
+            component={ShippingAddressScreen}></Route>
+          <Route exact path='/payment' component={PaymentMethodScreen}></Route>
+          <Route exact path='/placeorder' component={PlaceOrderScreen}></Route>
+          <Route exact path='/order/:id' component={OrderScreen}></Route>
+          <Route
+            exact
+            path='/orderhistory'
+            component={OrderHistoryScreen}></Route>
           <PrivateRoute
+            exact
             path='/profile'
             component={ProfileScreen}></PrivateRoute>
-          <Route path='/' component={HomeScreen} exact></Route>
-        </main>
-
-        <footer className='row center'>©2021. All Rights Reserved.</footer>
-      </div>
+          <Route exact path='/' component={HomeScreen}></Route>
+        </Switch>
+      </Container>
     </BrowserRouter>
   );
 }
