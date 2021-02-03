@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import {
   Typography,
   AppBar,
@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
+import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
     display: 'none',
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuAppBar() {
+export default function Navbar() {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -74,7 +74,7 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar color='transparent' position='static'>
         <Toolbar>
           <Typography variant='h4' className={classes.title}>
             HMD
@@ -85,9 +85,12 @@ export default function MenuAppBar() {
             </Button>
 
             <Button color='inherit' component={Link} to='/cart'>
-              <ShoppingCartIcon />
-              {cartItems.length > 0 && (
-                <span className='badge'>{cartItems.length}</span>
+              {cartItems.length > 0 ? (
+                <Badge badgeContent={cartItems.length} color='primary'>
+                  <ShoppingCartIcon />
+                </Badge>
+              ) : (
+                <ShoppingCartIcon />
               )}
             </Button>
 
