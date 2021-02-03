@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
   AppBar,
@@ -16,7 +16,14 @@ import {
   MenuList,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/core/styles';
+import HomeIcon from '@material-ui/icons/Home';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonIcon from '@material-ui/icons/Person';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../../actions/userActions';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,200 +33,173 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
     },
   },
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+    },
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
-export default function Navbar() {
+export default function MenuAppBar() {
+  const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const signoutHandler = () => {
+    setAnchorEl(null);
     dispatch(signout());
   };
-  const classes = useStyles();
-
-  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-  const isMenuOpen = Boolean(menuAnchorEl);
-  const openMenu = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-  const closeMenu = () => {
-    setMenuAnchorEl(null);
-  };
-
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-  const mobileMenu = (
-    <Menu
-      anchorEl={menuAnchorEl}
-      id='mobile-menu'
-      keepMounted
-      open={isMenuOpen}>
-      <MenuItem component={Link} to='/' onClick={closeMenu}>
-        Home
-      </MenuItem>
-      <MenuItem component={Link} to='/cart' onClick={closeMenu}>
-        Cart
-        {cartItems.length > 0 && (
-          <span className='badge'>{cartItems.length}</span>
-        )}
-      </MenuItem>
-    </Menu>
-  );
 
   return (
-    <Fragment>
-      <div>
-        <AppBar color='primary' position='static'>
-          <Toolbar>
-            <Typography variant='h4' style={{ flexGrow: 1 }} component={Link}>
-              HMD
-            </Typography>
-            <div className={classes.sectionDesktop}>
-              <Button color='inherit' component={Link} to='/'>
-                Home
-              </Button>
+    <div className={classes.root}>
+      <AppBar position='static'>
+        <Toolbar>
+          <Typography variant='h4' className={classes.title}>
+            HMD
+          </Typography>
+          <div className={classes.sectionDesktop}>
+            <Button color='inherit' component={Link} to='/'>
+              <HomeIcon />
+            </Button>
 
-              <Button color='inherit' component={Link} to='/cart'>
-                Cart
-                {cartItems.length > 0 && (
-                  <span className='badge'>{cartItems.length}</span>
-                )}
-              </Button>
-
-              <Popper
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                transition
-                disablePortal>
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    style={{
-                      transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom',
-                    }}>
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <MenuList
-                          autoFocusItem={open}
-                          id='menu-list-grow'
-                          onKeyDown={handleListKeyDown}>
-                          <MenuItem
-                            onClick={handleClose}
-                            color='inherit'
-                            component={Link}
-                            to='/profile'>
-                            Profile
-                          </MenuItem>
-                          <MenuItem
-                            onClick={handleClose}
-                            color='inherit'
-                            component={Link}
-                            to='/orderhistory'>
-                            Order History
-                          </MenuItem>
-
-                          {userInfo && userInfo.isAdmin && (
-                            <MenuItem
-                              onClick={handleClose}
-                              color='inherit'
-                              component={Link}
-                              to='/dashboard'>
-                              Dashboard
-                            </MenuItem>
-                          )}
-                          {userInfo && userInfo.isAdmin && (
-                            <MenuItem
-                              onClick={handleClose}
-                              color='inherit'
-                              component={Link}
-                              to='/productlist'>
-                              Products
-                            </MenuItem>
-                          )}
-                          {userInfo && userInfo.isAdmin && (
-                            <MenuItem
-                              onClick={handleClose}
-                              color='inherit'
-                              component={Link}
-                              to='/orderlist'>
-                              Orders
-                            </MenuItem>
-                          )}
-                          {userInfo && userInfo.isAdmin && (
-                            <MenuItem
-                              onClick={handleClose}
-                              color='inherit'
-                              component={Link}
-                              to='/userlist'>
-                              Users
-                            </MenuItem>
-                          )}
-
-                          <MenuItem onClick={(handleClose, signoutHandler)}>
-                            Logout
-                          </MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-              {userInfo ? (
-                <Button
-                  ref={anchorRef}
-                  color='inherit'
-                  aria-controls={open ? 'menu-list-grow' : undefined}
-                  aria-haspopup='true'
-                  onClick={handleToggle}>
-                  {userInfo.name} <i className='fa fa-caret-down'></i>
-                </Button>
-              ) : (
-                <Button color='inherit' component={Link} to='/signin'>
-                  Sign In
-                </Button>
+            <Button color='inherit' component={Link} to='/cart'>
+              <ShoppingCartIcon />
+              {cartItems.length > 0 && (
+                <span className='badge'>{cartItems.length}</span>
               )}
-            </div>
-            <IconButton color='inherit' onClick={openMenu}>
+            </Button>
+
+            {userInfo ? (
+              <Button
+                color='inherit'
+                component={Link}
+                aria-controls={open ? 'menu-list-grow' : undefined}
+                aria-haspopup='true'>
+                <PersonIcon />
+                <i className='fa fa-caret-down'></i>
+              </Button>
+            ) : (
+              <Button color='inherit' component={Link} to='/signin'>
+                Sign In
+              </Button>
+            )}
+          </div>
+          <div className={classes.menuButton}>
+            <IconButton
+              aria-label='menu'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleMenu}
+              color='inherit'>
               <MenuIcon />
             </IconButton>
-          </Toolbar>
-        </AppBar>
-        {mobileMenu}
-      </div>
-    </Fragment>
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}>
+              {userInfo ? (
+                <div>
+                  {userInfo.isAdmin && (
+                    <div>
+                      <MenuItem
+                        onClick={handleClose}
+                        color='inherit'
+                        component={Link}
+                        to='/dashboard'>
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleClose}
+                        color='inherit'
+                        component={Link}
+                        to='/productlist'>
+                        Products
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleClose}
+                        color='inherit'
+                        component={Link}
+                        to='/orderlist'>
+                        Orders
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleClose}
+                        color='inherit'
+                        component={Link}
+                        to='/userlist'>
+                        Users
+                      </MenuItem>
+                    </div>
+                  )}
+                  <MenuItem
+                    onClick={handleClose}
+                    color='inherit'
+                    component={Link}
+                    to='/profile'>
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleClose}
+                    color='inherit'
+                    component={Link}
+                    to='/orderhistory'>
+                    Order History
+                  </MenuItem>
+                  <MenuItem
+                    onClick={signoutHandler}
+                    color='inherit'
+                    component={Link}
+                    to='/'>
+                    Logout
+                  </MenuItem>
+                </div>
+              ) : (
+                <div>
+                  <MenuItem
+                    onClick={handleClose}
+                    color='inherit'
+                    component={Link}
+                    to='/signin'>
+                    Sign In
+                  </MenuItem>
+                </div>
+              )}
+            </Menu>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
