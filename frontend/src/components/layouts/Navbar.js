@@ -74,23 +74,23 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar color='transparent' position='static'>
+      <AppBar color='transparent' position='static' elevation={0}>
         <Toolbar>
           <Typography variant='h4' className={classes.title}>
             HMD
           </Typography>
           <div className={classes.sectionDesktop}>
             <Button color='inherit' component={Link} to='/'>
-              <HomeIcon />
+              <HomeIcon fontSize='large' />
             </Button>
 
             <Button color='inherit' component={Link} to='/cart'>
               {cartItems.length > 0 ? (
-                <Badge badgeContent={cartItems.length} color='primary'>
-                  <ShoppingCartIcon />
+                <Badge badgeContent={cartItems.length} color='secondary'>
+                  <ShoppingCartIcon fontSize='large' />
                 </Badge>
               ) : (
-                <ShoppingCartIcon />
+                <ShoppingCartIcon fontSize='large' />
               )}
             </Button>
 
@@ -100,7 +100,7 @@ export default function Navbar() {
                 component={Link}
                 aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup='true'>
-                <PersonIcon />
+                <PersonIcon fontSize='large' />
                 <i className='fa fa-caret-down'></i>
               </Button>
             ) : (
@@ -116,7 +116,7 @@ export default function Navbar() {
               aria-haspopup='true'
               onClick={handleMenu}
               color='inherit'>
-              <MenuIcon />
+              <MenuIcon fontSize='large' />
             </IconButton>
             <Menu
               id='menu-appbar'

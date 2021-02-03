@@ -18,8 +18,6 @@ import SignInScreen from './screens/SignInScreen';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100vw',
-    height: '100vh',
     backgroundColor: theme.palette.grey[300],
   },
 }));
