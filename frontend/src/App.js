@@ -6,10 +6,8 @@ import {
   ThemeProvider,
 } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
-import { purple, green, blue } from '@material-ui/core/colors';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/layouts/Navbar';
-import Dropdown from './components/layouts/Dropdown';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
@@ -21,7 +19,6 @@ import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SignInScreen from './screens/SignInScreen';
-import { PictureAsPdfOutlined } from '../node_modules/@material-ui/icons/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {
