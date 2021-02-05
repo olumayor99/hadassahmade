@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
   Typography,
   AppBar,
@@ -16,16 +16,19 @@ import {
   MenuList,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Badge from '@material-ui/core/Badge';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PersonIcon from '@material-ui/icons/Person';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../../actions/userActions';
+import logo from '../../components/images/logo.png';
+import Drawer from '../../components/layouts/drawer';
 
 const useStyles = makeStyles((theme) => ({
   sectionDesktop: {
@@ -46,7 +49,21 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  logo: {
+    maxWidth: 50,
+    marginRight: theme.spacing(2),
+  },
 }));
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+    fontSize: '1.0rem',
+  },
+}))(Badge);
 
 export default function Navbar() {
   const classes = useStyles();
@@ -54,10 +71,10 @@ export default function Navbar() {
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  const dispatch = useDispatch();
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const dispatch = useDispatch();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,52 +89,54 @@ export default function Navbar() {
     dispatch(signout());
   };
 
+  useEffect(() => {
+    window.addEventListener('resize', handleClose);
+    return () => window.removeEventListener('resize', handleClose);
+  });
+
   return (
     <div className={classes.root}>
       <AppBar color='transparent' position='static' elevation={0}>
         <Toolbar>
-          <Typography variant='h4' className={classes.title}>
-            HMD
+          <Typography variant='h3' className={classes.title}>
+            <img src={logo} alt='HMD' className={classes.logo} />
           </Typography>
           <div className={classes.sectionDesktop}>
-            <Button color='inherit' component={Link} to='/'>
-              <HomeIcon fontSize='large' />
+            <Button color='primary' component={Link} to='/'>
+              <HomeOutlinedIcon fontSize='large' />
             </Button>
 
-            <Button color='inherit' component={Link} to='/cart'>
+            <Button color='primary' component={Link} to='/cart'>
               {cartItems.length > 0 ? (
-                <Badge badgeContent={cartItems.length} color='secondary'>
-                  <ShoppingCartIcon fontSize='large' />
-                </Badge>
+                <StyledBadge
+                  badgeContent={cartItems.length}
+                  color='primary'
+                  fullWidth>
+                  <ShoppingCartOutlinedIcon fontSize='large' />
+                </StyledBadge>
               ) : (
-                <ShoppingCartIcon fontSize='large' />
+                <ShoppingCartOutlinedIcon fontSize='large' />
               )}
             </Button>
 
             {userInfo ? (
               <Button
-                color='inherit'
+                color='primary'
                 component={Link}
                 aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup='true'>
-                <PersonIcon fontSize='large' />
+                <AccountCircleOutlinedIcon fontSize='large' />
                 <i className='fa fa-caret-down'></i>
               </Button>
             ) : (
-              <Button color='inherit' component={Link} to='/signin'>
-                Sign In
+              <Button color='primary' component={Link} to='/signin'>
+                <PersonAddOutlinedIcon fontSize='large' />
               </Button>
             )}
           </div>
           <div className={classes.menuButton}>
-            <IconButton
-              aria-label='menu'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleMenu}
-              color='inherit'>
-              <MenuIcon fontSize='large' />
-            </IconButton>
+            <Drawer />
+
             <Menu
               id='menu-appbar'
               anchorEl={anchorEl}
