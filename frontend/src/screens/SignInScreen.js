@@ -69,14 +69,17 @@ export default function SignInScreen(props) {
             {loading && <LoadingBox></LoadingBox>}
             {error && <MessageBox variant='danger'>{error}</MessageBox>}
             <TextField
+              style={marginTop}
               label='Username'
               placeholder='Enter username'
+              type='email'
               onChange={(e) => setEmail(e.target.value)}
               fontSize='large'
               fullWidth
               required
             />
             <TextField
+              style={marginTop}
               label='Password'
               placeholder='Enter password'
               type='password'

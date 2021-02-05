@@ -65,7 +65,7 @@ export default function RegisterScreen(props) {
     <ThemeProvider theme={theme}>
       <Grid>
         <Paper elevation={10} style={paperStyle}>
-          <Grid align='center' gutterBottom>
+          <Grid align='center' style={marginTop} gutterBottom>
             <Avatar style={avatarStyle}>
               <GroupAddOutlinedIcon fontSize='large' />
             </Avatar>
@@ -74,26 +74,34 @@ export default function RegisterScreen(props) {
             {loading && <LoadingBox></LoadingBox>}
             {error && <MessageBox variant='danger'>{error}</MessageBox>}
             <TextField
+              style={marginTop}
               fullWidth
               label='Name'
+              type='text'
               placeholder='Enter your name'
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
+              style={marginTop}
               fullWidth
               label='Email'
+              type='email'
               placeholder='Enter your email'
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
+              style={marginTop}
               fullWidth
               label='Password'
+              type='password'
               placeholder='Enter your password'
               onChange={(e) => setPassword(e.target.value)}
             />
             <TextField
+              style={marginTop}
               fullWidth
               label='Confirm Password'
+              type='password'
               placeholder='Confirm your password'
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
