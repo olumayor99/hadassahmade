@@ -1,31 +1,18 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Typography,
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  ClickAwayListener,
-  Grow,
-  Paper,
-  Popper,
-  MenuList,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Typography, Button } from '@material-ui/core';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { signout } from '../../actions/userActions';
 
 const useStyles = makeStyles((theme) => ({
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
   root: {
     display: 'flex',
   },
@@ -34,27 +21,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-  const isMenuOpen = Boolean(menuAnchorEl);
+export default function MenuListComposition() {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  const dispatch = useDispatch();
-  const signoutHandler = () => {
-    setOpen(null);
-    dispatch(signout());
-  };
-  const classes = useStyles();
 
-  const openMenu = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-  const closeMenu = () => {
-    setMenuAnchorEl(null);
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const dispatch = useDispatch();
+
+  const signoutHandler = () => {
+    dispatch(signout());
   };
 
   const handleToggle = () => {
@@ -86,162 +64,112 @@ export default function Navbar() {
     prevOpen.current = open;
   }, [open]);
 
-  const mobileMenu = (
-    <Menu
-      anchorEl={menuAnchorEl}
-      id='mobile-menu'
-      keepMounted
-      open={isMenuOpen}>
-      <MenuItem color='inherit' component={Link} to='/' onClick={closeMenu}>
-        Home
-      </MenuItem>
-      <MenuItem color='inherit' component={Link} to='/cart' onClick={closeMenu}>
-        Cart
-        {cartItems.length > 0 && (
-          <span className='badge'>{cartItems.length}</span>
-        )}
-      </MenuItem>
-
-      {userInfo ? (
-        <MenuItem
+  return (
+    <div className={classes.root}>
+      <div>
+        <Button
+          color='primary'
+          component={Link}
           ref={anchorRef}
-          color='inherit'
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup='true'
           onClick={handleToggle}>
-          {userInfo.name} <i className='fa fa-caret-down'></i>
-        </MenuItem>
-      ) : (
-        <MenuItem color='inherit' component={Link} to='/signin'>
-          Sign In
-        </MenuItem>
-      )}
-      <Popper
-        open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
-            }}>
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  autoFocusItem={open}
-                  id='menu-list-grow'
-                  onKeyDown={handleListKeyDown}>
-                  <MenuItem
-                    onClick={handleClose}
-                    color='inherit'
-                    component={Link}
-                    to='/profile'>
-                    Profile
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    color='inherit'
-                    component={Link}
-                    to='/orderhistory'>
-                    Order History
-                  </MenuItem>
-
-                  {userInfo && userInfo.isAdmin && (
-                    <MenuItem
-                      onClick={handleClose}
-                      color='inherit'
-                      component={Link}
-                      to='/dashboard'>
-                      Dashboard
-                    </MenuItem>
-                  )}
-                  {userInfo && userInfo.isAdmin && (
-                    <MenuItem
-                      onClick={handleClose}
-                      color='inherit'
-                      component={Link}
-                      to='/productlist'>
-                      Products
-                    </MenuItem>
-                  )}
-                  {userInfo && userInfo.isAdmin && (
-                    <MenuItem
-                      onClick={handleClose}
-                      color='inherit'
-                      component={Link}
-                      to='/orderlist'>
-                      Orders
-                    </MenuItem>
-                  )}
-                  {userInfo && userInfo.isAdmin && (
-                    <MenuItem
-                      onClick={handleClose}
-                      color='inherit'
-                      component={Link}
-                      to='/userlist'>
-                      Users
-                    </MenuItem>
-                  )}
-
-                  <MenuItem
-                    onClick={signoutHandler}
-                    color='inherit'
-                    component={Link}
-                    to='/'>
-                    Logout
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </Menu>
-  );
-
-  return (
-    <Fragment>
-      <div>
-        <AppBar color='primary' position='static'>
-          <Toolbar>
-            <Typography variant='h4' style={{ flexGrow: 1 }} component={Link}>
-              HMD
-            </Typography>
-            <div className={classes.sectionDesktop}>
-              <Button color='inherit' component={Link} to='/'>
-                Home
-              </Button>
-
-              <Button color='inherit' component={Link} to='/cart'>
-                Cart
-                {cartItems.length > 0 && (
-                  <span className='badge'>{cartItems.length}</span>
-                )}
-              </Button>
-
-              {userInfo ? (
-                <Button
-                  ref={anchorRef}
-                  color='inherit'
-                  aria-controls={open ? 'menu-list-grow' : undefined}
-                  aria-haspopup='true'
-                  onClick={handleToggle}>
-                  {userInfo.name} <i className='fa fa-caret-down'></i>
-                </Button>
-              ) : (
-                <Button color='inherit' component={Link} to='/signin'>
-                  Sign In
-                </Button>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
-        {mobileMenu}
+          <AccountCircleOutlinedIcon fontSize='large' />
+          <i className='fa fa-caret-down'></i>
+        </Button>
+        <Popper
+          open={open}
+          anchorEl={anchorRef.current}
+          role={undefined}
+          transition
+          disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === 'bottom' ? 'center top' : 'center bottom',
+              }}>
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList
+                    autoFocusItem={open}
+                    id='menu-list-grow'
+                    onKeyDown={handleListKeyDown}>
+                    {userInfo ? (
+                      <div>
+                        {userInfo.isAdmin && (
+                          <div>
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/dashboard'>
+                              <Typography variant='h6'>Dashboard</Typography>
+                            </MenuItem>
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/productlist'>
+                              <Typography variant='h6'>Products</Typography>
+                            </MenuItem>
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/orderlist'>
+                              <Typography variant='h6'>Orders</Typography>
+                            </MenuItem>
+                            <MenuItem
+                              onClick={handleClose}
+                              color='inherit'
+                              component={Link}
+                              to='/userlist'>
+                              <Typography variant='h6'>Users</Typography>
+                            </MenuItem>
+                          </div>
+                        )}
+                        <MenuItem
+                          onClick={handleClose}
+                          color='inherit'
+                          component={Link}
+                          to='/profile'>
+                          <Typography variant='h6'>Profile</Typography>
+                        </MenuItem>
+                        <MenuItem
+                          onClick={handleClose}
+                          color='inherit'
+                          component={Link}
+                          to='/orderhistory'>
+                          <Typography variant='h6'>Order History</Typography>
+                        </MenuItem>
+                        <MenuItem
+                          onClick={signoutHandler}
+                          color='inherit'
+                          component={Link}
+                          to='/'>
+                          <Typography variant='h6'>Logout</Typography>
+                        </MenuItem>
+                      </div>
+                    ) : (
+                      <div>
+                        <MenuItem
+                          onClick={handleClose}
+                          color='inherit'
+                          component={Link}
+                          to='/signin'>
+                          Sign In
+                        </MenuItem>
+                      </div>
+                    )}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
       </div>
-    </Fragment>
+    </div>
   );
 }

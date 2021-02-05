@@ -3,7 +3,7 @@ html {
   box-sizing: border-box;
 }
 
-/*body {
+body {
   margin: 0;
   height: 100vh;
   font-size: 1.6rem;
@@ -13,7 +13,7 @@ html {
 }
 #root {
   height: 100%;
-}*/
+}
 
 /* layout */
 .grid-container {
