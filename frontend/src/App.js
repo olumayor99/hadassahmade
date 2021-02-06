@@ -1,10 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {
-  makeStyles,
-  createMuiTheme,
-  ThemeProvider,
-} from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/layouts/Navbar';
@@ -19,29 +14,13 @@ import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SignInScreen from './screens/SignInScreen';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary,
-  },
-}));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: { main: '#c39578' },
-    secondary: { main: '#01365d' },
-  },
-});
+import Footer from './components/layouts/Footer';
 
 function App() {
-  const classes = useStyles();
-
   return (
     <BrowserRouter>
-      <Container className={classes.root} disableGutters>
-        <ThemeProvider theme={theme}>
-          <Navbar />
-        </ThemeProvider>
+      <Navbar />
+      <main>
         <Switch>
           <Route exact path='/cart/:id?' component={CartScreen}></Route>
           <Route exact path='/product/:id' component={ProductScreen}></Route>
@@ -64,7 +43,8 @@ function App() {
             component={ProfileScreen}></PrivateRoute>
           <Route exact path='/' component={HomeScreen}></Route>
         </Switch>
-      </Container>
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 }

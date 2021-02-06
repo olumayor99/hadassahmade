@@ -26,7 +26,7 @@ const theme = createMuiTheme({
 export default function RegisterScreen(props) {
   const paperStyle = {
     padding: 20,
-    height: '40vh',
+    height: '60vh',
     width: 280,
     margin: '20px auto',
   };

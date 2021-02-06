@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  withStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 import { Typography, AppBar, Toolbar, Button } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Badge from '@material-ui/core/Badge';
@@ -35,6 +40,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#c39578' },
+    secondary: { main: '#01365d' },
+  },
+});
+
 const StyledBadge = withStyles((theme) => ({
   badge: {
     right: -3,
@@ -53,8 +65,12 @@ export default function Navbar() {
   const { userInfo } = userSignin;
 
   return (
-    <div className={classes.root}>
-      <AppBar color='transparent' position='static' elevation={0}>
+    <ThemeProvider theme={theme}>
+      <AppBar
+        className={classes.root}
+        color='transparent'
+        position='static'
+        elevation={0}>
         <Toolbar>
           <Typography variant='h3' className={classes.title}>
             <img src={logo} alt='HMD' className={classes.logo} />
@@ -90,6 +106,6 @@ export default function Navbar() {
           </div>
         </Toolbar>
       </AppBar>
-    </div>
+    </ThemeProvider>
   );
 }

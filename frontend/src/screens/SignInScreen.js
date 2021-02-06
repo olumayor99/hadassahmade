@@ -26,7 +26,7 @@ const theme = createMuiTheme({
 export default function SignInScreen(props) {
   const paperStyle = {
     padding: 20,
-    height: '40vh',
+    height: '60vh',
     width: 280,
     margin: '20px auto',
   };
@@ -102,7 +102,9 @@ export default function SignInScreen(props) {
               <Typography> Sign in</Typography>
             </Button>
             <Typography>
-              <Link to='#'>Forgot password? </Link>
+              <Link to='#' color='primary'>
+                Forgot password?{' '}
+              </Link>
             </Typography>
             <Typography>
               New Customer?{' '}
