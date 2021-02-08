@@ -7,6 +7,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+import Carousel from '../components/layouts/Carousel';
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -28,6 +29,7 @@ export default function HomeScreen() {
 
   return (
     <div>
+      <Carousel />
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
