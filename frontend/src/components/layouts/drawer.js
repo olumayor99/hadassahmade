@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
@@ -23,15 +24,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../../actions/userActions';
 
-const useStyles = makeStyles({
-  list: {
-    width: 150,
-  },
-  fullList: {
-    width: 150,
-  },
-});
-
 const StyledBadge = withStyles((theme) => ({
   badge: {
     right: -3,
@@ -41,6 +33,15 @@ const StyledBadge = withStyles((theme) => ({
     fontSize: '1.0rem',
   },
 }))(Badge);
+
+const useStyles = makeStyles({
+  list: {
+    width: 150,
+  },
+  fullList: {
+    width: 150,
+  },
+});
 
 export default function Drawer() {
   const classes = useStyles();

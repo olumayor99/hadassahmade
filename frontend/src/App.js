@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Container } from '@material-ui/core';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/layouts/Navbar';
 import CartScreen from './screens/CartScreen';
@@ -20,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <main>
+      <main className='Site'>
         <Switch>
           <Route exact path='/cart/:id?' component={CartScreen}></Route>
           <Route exact path='/product/:id' component={ProductScreen}></Route>

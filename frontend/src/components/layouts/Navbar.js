@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import {
   makeStyles,
-  withStyles,
   createMuiTheme,
   ThemeProvider,
+  withStyles,
 } from '@material-ui/core/styles';
 import { Typography, AppBar, Toolbar, Button } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
@@ -14,6 +14,13 @@ import logo from '../images/logo.png';
 import Drawer from '../layouts/drawer';
 import Dropdown from '../layouts/Dropdown';
 import { useSelector } from 'react-redux';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#c39578' },
+    secondary: { main: '#01365d' },
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   sectionDesktop: {
@@ -39,13 +46,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
 }));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: { main: '#c39578' },
-    secondary: { main: '#01365d' },
-  },
-});
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
